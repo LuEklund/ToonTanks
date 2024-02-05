@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 
 ATank::ATank()
 {
@@ -19,9 +20,39 @@ ATank::ATank()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-    UE_LOG(LogTemp, Display, TEXT("Your message"));
     PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
     PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
+
+    PlayerInputComponent->BindAction(TEXT("fire"), IE_Pressed, this, &ATank::fire);
+
+}
+
+
+// Called every frame
+void ATank::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+
+    if (playerControllerRef)
+    {
+        FHitResult hitResult;
+        playerControllerRef->GetHitResultUnderCursor(
+            ECollisionChannel::ECC_Visibility,
+            false,
+            hitResult);
+        
+        DrawDebugSphere(
+            GetWorld(),
+            hitResult.ImpactPoint,
+            20,
+            12,
+            FColor::Red,
+            false,
+            -1.f);
+
+            rotateTurret(hitResult.ImpactPoint);
+    }
 
 }
 
