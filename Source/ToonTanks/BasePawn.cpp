@@ -2,6 +2,7 @@
 
 
 #include "BasePawn.h"
+#include "Projectile.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -48,5 +49,9 @@ void	ABasePawn::fire()
 		FColor::Green,
 		false,
 		3.f);
+	GetWorld()->SpawnActor<AProjectile>(
+		projectileClass,
+		porjecttileSpawnPoint->GetComponentLocation(),
+		porjecttileSpawnPoint->GetComponentRotation());
 }
 

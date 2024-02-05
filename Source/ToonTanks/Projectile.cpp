@@ -2,15 +2,22 @@
 
 
 #include "Projectile.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
-	bullet = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Bullet"));
-	RootComponent = bullet;
+	projectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
+	RootComponent = projectileMesh;
+
+	projectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
+	projectileMovement->MaxSpeed = maxSpeed;
+	projectileMovement->InitialSpeed = speed;
+	//projectileMovement->SetupAttachment(projectileMesh);
+
 
 }
 
@@ -18,6 +25,8 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	projectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::onHit);
+
 	
 }
 
@@ -28,3 +37,8 @@ void AProjectile::Tick(float DeltaTime)
 
 }
 
+
+void	AProjectile::onHit(UPrimitiveComponent *hitComponent, AActor *otherActor, UPrimitiveComponent *otherComponent, FVector normalImpulse, const FHitResult& hit)
+{
+	UE_LOG(LogTemp, Display, TEXT("Your message"));
+}
