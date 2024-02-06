@@ -6,6 +6,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "Camera/CameraShakeBase.h"
+
+
 // Sets default values
 ABasePawn::ABasePawn()
 {
@@ -28,7 +31,9 @@ ABasePawn::ABasePawn()
 
 void	ABasePawn::HandleDestruction()
 {
-	//TODO : vis sound effect
+	UGameplayStatics::SpawnEmitterAtLocation(this, DeathExplosion, GetActorLocation(), GetActorRotation());
+	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+	GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass);
 }
 
 
@@ -54,7 +59,7 @@ void	ABasePawn::fire()
 		FColor::Green,
 		false,
 		3.f);
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+	AProjectile	*Projectile = GetWorld()->SpawnActor<AProjectile>(
 		projectileClass,
 		porjecttileSpawnPoint->GetComponentLocation(),
 		porjecttileSpawnPoint->GetComponentRotation());
