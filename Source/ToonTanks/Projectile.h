@@ -41,4 +41,10 @@ private:
 	UFUNCTION()
 	void	onHit(UPrimitiveComponent *hitComponent, AActor *otherActor, UPrimitiveComponent *otherComponent, FVector normalImpulse, const FHitResult& hit);
 
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class	UParticleSystem *HitParticles;
+
+	UPROPERTY(VisibleAnywhere, Category = "Combat")
+	class	UParticleSystemComponent *TrailParticels;
+
 };
