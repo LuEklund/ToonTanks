@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "HealthComponent.h"
 #include "BasePawn.generated.h"
 
 UCLASS()
@@ -16,6 +17,9 @@ public:
 	ABasePawn();
 
 	void	HandleDestruction();
+
+	UFUNCTION(BlueprintPure)
+	float	GetHealthPercent() const;
 
 protected:
 	void	rotateTurret(FVector lookAtTraget);
@@ -34,6 +38,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
 	USceneComponent *porjecttileSpawnPoint;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
+	UHealthComponent *health;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<class AProjectile> projectileClass;

@@ -16,3 +16,18 @@ void	AToonTanksPlayerController::SetPlayerEnabledSate(bool bPlayerEnable)
     }
     bShowMouseCursor = bPlayerEnable;
 }
+
+void AToonTanksPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	HUD = CreateWidget(this, HUDClass);
+	if (HUD != nullptr)
+	{
+		HUD->AddToViewport();
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("ERROR NO HUD"));
+	}
+}
