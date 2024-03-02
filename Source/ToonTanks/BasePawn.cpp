@@ -17,6 +17,8 @@ ABasePawn::ABasePawn()
 	caplsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	RootComponent = caplsuleComponent;
 
+	health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+
 	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
 	baseMesh->SetupAttachment(caplsuleComponent);
 
@@ -34,6 +36,12 @@ void	ABasePawn::HandleDestruction()
 	UGameplayStatics::SpawnEmitterAtLocation(this, DeathExplosion, GetActorLocation(), GetActorRotation());
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 	GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass);
+}
+
+
+float	ABasePawn::GetHealthPercent() const
+{
+	return (health->GetHealth() / health->GetMaxHealth());
 }
 
 

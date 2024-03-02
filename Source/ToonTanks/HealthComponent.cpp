@@ -15,6 +15,16 @@ UHealthComponent::UHealthComponent()
 	// ...
 }
 
+float UHealthComponent::GetMaxHealth() const
+{
+	return (MaxHealth);
+}
+
+float UHealthComponent::GetHealth() const
+{
+	return (Health);
+}
+
 
 // Called when the game starts
 void UHealthComponent::BeginPlay()
