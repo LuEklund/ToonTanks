@@ -29,6 +29,10 @@ public:
 
 	bool	bAlive = true;
 
+	UFUNCTION(BlueprintPure, Category = "Combat")
+	float	GetFireCooldownPercent() const;
+
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,7 +43,14 @@ private:
 	float	speed = 500.f;	
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float	turnRate = 50.f;	
+	float	turnRate = 50.f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FTimerHandle	fireRateTimerHandle;
+	float			fireRate = .5f;
+	bool			canFire = true;
+
+
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
 	class USpringArmComponent *springArm;
@@ -48,7 +59,10 @@ private:
 
 	APlayerController *TankPlayerController;
 
-	void	Move(float value);
-	void	Turn(float value);
+	void			Move(float value);
+	void			Turn(float value);
+
+	void			PreFire();
+	void			ResetTimerCooldown();
 	
 };

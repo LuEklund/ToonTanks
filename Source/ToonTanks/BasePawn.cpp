@@ -39,10 +39,12 @@ void	ABasePawn::HandleDestruction()
 }
 
 
+
 float	ABasePawn::GetHealthPercent() const
 {
 	return (health->GetHealth() / health->GetMaxHealth());
 }
+
 
 
 void	ABasePawn::rotateTurret(FVector lookAtTraget)
@@ -59,6 +61,7 @@ void	ABasePawn::rotateTurret(FVector lookAtTraget)
 
 void	ABasePawn::fire()
 {
+	/*
 	DrawDebugSphere(
 		GetWorld(),
 		porjecttileSpawnPoint->GetComponentLocation(),
@@ -66,11 +69,14 @@ void	ABasePawn::fire()
 		12,
 		FColor::Green,
 		false,
-		3.f);
+		3.f);*/
 	AProjectile	*Projectile = GetWorld()->SpawnActor<AProjectile>(
 		projectileClass,
 		porjecttileSpawnPoint->GetComponentLocation(),
 		porjecttileSpawnPoint->GetComponentRotation());
 		Projectile->SetOwner(this);
 }
+
+
+
 
