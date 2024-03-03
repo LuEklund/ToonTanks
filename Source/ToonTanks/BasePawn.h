@@ -18,12 +18,15 @@ public:
 
 	void	HandleDestruction();
 
-	UFUNCTION(BlueprintPure)
+	UFUNCTION(BlueprintPure, Category = "Health")
 	float	GetHealthPercent() const;
 
+
 protected:
+
 	void	rotateTurret(FVector lookAtTraget);
 	void	fire();
+
 
 
 private:
@@ -53,6 +56,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class UCameraShakeBase> DeathCameraShakeClass;
+
+
+
 
 
 

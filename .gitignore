@@ -94,3 +94,6 @@ DerivedDataCache/*
 Binaries/
 Intermediate/
 Saved/
+
+.vscode/**
+.vscode/

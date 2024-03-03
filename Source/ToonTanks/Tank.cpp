@@ -23,10 +23,16 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
     PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
     PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
 
-    PlayerInputComponent->BindAction(TEXT("fire"), IE_Pressed, this, &ATank::fire);
+    PlayerInputComponent->BindAction(TEXT("fire"), IE_Pressed, this, &ATank::PreFire);
 
 }
 
+float	ATank::GetFireCooldownPercent() const
+{
+    float cooldown = this->GetWorldTimerManager().GetTimerRemaining(this->fireRateTimerHandle);
+    float clamedCooldown = FMath::Clamp(cooldown / fireRate, 0.f, 1.f);
+	return(clamedCooldown);
+}
 
 // Called every frame
 void ATank::Tick(float DeltaTime)
@@ -69,6 +75,7 @@ void ATank::HandleDestruction()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+    GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATank::ResetTimerCooldown, 0, false);
 	TankPlayerController = Cast<APlayerController>(GetController());
 }
 
@@ -95,5 +102,24 @@ void	ATank::Turn(float value)
 
 }
 
+
+void	ATank::PreFire()
+{
+    float cooldown = this->GetWorldTimerManager().GetTimerRemaining(this->fireRateTimerHandle);
+
+    UE_LOG(LogTemp, Display, TEXT("cooldown %f, fire rate %f, percentage %f"), cooldown, fireRate, cooldown/fireRate);
+
+    if (canFire)
+    {
+        fire();
+        canFire = false;
+        GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATank::ResetTimerCooldown, fireRate, false);
+    }
+}
+
+void    ATank::ResetTimerCooldown()
+{
+    canFire = true;
+}
 
 
