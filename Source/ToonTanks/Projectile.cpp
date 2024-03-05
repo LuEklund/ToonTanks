@@ -55,7 +55,6 @@ void	AProjectile::onHit(UPrimitiveComponent *hitComponent, AActor *otherActor, U
 		Destroy();
 		return;
 	}
-
 	AController	*MyOwnerInstigator = MyOwner->GetInstigatorController();
 	UClass		*DamageTypeClass = UDamageType::StaticClass();
 
