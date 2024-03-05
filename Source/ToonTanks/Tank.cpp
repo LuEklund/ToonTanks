@@ -47,7 +47,7 @@ void ATank::Tick(float DeltaTime)
             ECollisionChannel::ECC_Visibility,
             false,
             hitResult);
-        
+        /*
         DrawDebugSphere(
             GetWorld(),
             hitResult.ImpactPoint,
@@ -55,9 +55,9 @@ void ATank::Tick(float DeltaTime)
             12,
             FColor::Red,
             false,
-            -1.f);
+            -1.f);*/
 
-            rotateTurret(hitResult.ImpactPoint);
+        rotateTurret(hitResult.ImpactPoint);
     }
 
 }
@@ -107,10 +107,10 @@ void	ATank::PreFire()
 {
     float cooldown = this->GetWorldTimerManager().GetTimerRemaining(this->fireRateTimerHandle);
 
-    UE_LOG(LogTemp, Display, TEXT("cooldown %f, fire rate %f, percentage %f"), cooldown, fireRate, cooldown/fireRate);
 
     if (canFire)
     {
+	    UE_LOG(LogTemp, Display, TEXT("1"));
         fire();
         canFire = false;
         GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATank::ResetTimerCooldown, fireRate, false);
@@ -121,5 +121,11 @@ void    ATank::ResetTimerCooldown()
 {
     canFire = true;
 }
+
+void	ATank::IncreaseSpeed(float _speed)
+{
+    speed += _speed;
+}
+
 
 

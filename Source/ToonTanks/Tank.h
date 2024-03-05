@@ -32,6 +32,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Combat")
 	float	GetFireCooldownPercent() const;
 
+	void	IncreaseSpeed(float speed);
+
 
 
 protected:
