@@ -97,3 +97,7 @@ Saved/
 
 .vscode/**
 .vscode/
+
+UpgradeLog.htm
+ToonTanks.code-workspace
+.vsconfig

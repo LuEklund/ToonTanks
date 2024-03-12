@@ -49,9 +49,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FTimerHandle	fireRateTimerHandle;
-	float			fireRate = .5f;
+	float			fireRate = .51f;
 	bool			canFire = true;
-
 
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))

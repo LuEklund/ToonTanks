@@ -2,8 +2,9 @@
 
 
 #include "SpeedPowerUp.h"
+#include "Tank.h"
 
 void	ASpeedPowerUp::ApplyPowerUpEffect(ATank &tank)
 {
-    UE_LOG(LogTemp, Display, TEXT("SPEED"));
+    UE_LOG(LogTemp, Display, TEXT("SPEED233"));
 }
