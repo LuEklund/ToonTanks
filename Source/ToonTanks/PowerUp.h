@@ -25,7 +25,7 @@ public:
 	APowerUp();
 	virtual void	ApplyPowerUpEffect(ATank &tank);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
+	UPROPERTY(SaveGame,EditAnywhere, Category="Item")
 	class	UItem	*item;
 
 
