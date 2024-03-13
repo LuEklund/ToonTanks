@@ -21,10 +21,18 @@ private:
 
 	UUserWidget *HUD;
 
+	class UIventoryComponent *inventory;
+
 protected:
 	virtual void BeginPlay() override;
 
 public:
 	void	SetPlayerEnabledSate(bool bPlayerEnable);
+
+	UFUNCTION(BlueprintCallable, Category = "Items")
+	void	UseItem(class UItem* Item);
+
+	UFUNCTION(BlueprintCallable, Category = "Items")
+	class UIventoryComponent*	GetInventory();
 	
 };

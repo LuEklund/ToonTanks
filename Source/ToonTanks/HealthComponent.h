@@ -19,6 +19,8 @@ public:
 	float GetMaxHealth() const;
 	float GetHealth() const;
 
+	void SetHealth(float const _health);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

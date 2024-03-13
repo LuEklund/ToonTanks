@@ -2,6 +2,9 @@
 
 
 #include "ToonTanksPlayerController.h"
+#include "Inventory/Item.h"
+#include "Inventory/IventoryComponent.h"
+#include "BasePawn.h"
 #include "GameFramework/Pawn.h"
 
 void	AToonTanksPlayerController::SetPlayerEnabledSate(bool bPlayerEnable)
@@ -30,4 +33,44 @@ void AToonTanksPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Display, TEXT("ERROR NO HUD"));
 	}
+	inventory =  Cast<ABasePawn>(GetPawn())->inventory;
+	UE_LOG(LogTemp, Display, TEXT("UIventoryComponent PLAYERCONTROLLER233 called for instance: %p"), Cast<ABasePawn>(GetPawn())->inventory);
+
 }
+
+void	AToonTanksPlayerController::UseItem(class UItem* Item)
+{
+	if (Item)
+	{
+		//UE_LOG(LogTemp, Display, TEXT("Your message"));
+		Item->Use(Cast<ABasePawn>(GetPawn()));
+		Item->OnUse(Cast<ABasePawn>(GetPawn()));
+	}
+}
+
+UIventoryComponent*	AToonTanksPlayerController::GetInventory()
+{
+	UE_LOG(LogTemp, Display, TEXT("\n\n\n\n\nHEEEEE\n\n\n\n\n\n"));
+	UE_LOG(LogTemp, Display, TEXT("RIGHT FUNCTION instance: %p"), Cast<ABasePawn>(GetPawn())->inventory);
+	return(inventory);
+	if (!GetPawn())
+	{
+		UE_LOG(LogTemp, Display, TEXT("\n=====================\nNO PAWN\n========================="));
+	}
+	if (!Cast<ABasePawn>(GetPawn()))
+	{
+		UE_LOG(LogTemp, Display, TEXT("\n=====================\nBAD CAST\n========================="));
+	}
+	UE_LOG(LogTemp, Display, TEXT("Your message %s"), *GetPawn()->GetName());
+	if (Cast<ABasePawn>(GetPawn())->inventory)
+	{
+		UE_LOG(LogTemp, Display, TEXT("\n=====================\nGET INV2\n========================="));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("\n=====================\nGET NO INV3\n========================="));
+	}
+	return (Cast<ABasePawn>(GetPawn())->inventory);
+}
+
+

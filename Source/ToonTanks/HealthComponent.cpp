@@ -25,6 +25,12 @@ float UHealthComponent::GetHealth() const
 	return (Health);
 }
 
+void UHealthComponent::SetHealth(float const _health)
+{
+	Health = _health;
+}
+
+
 
 // Called when the game starts
 void UHealthComponent::BeginPlay()

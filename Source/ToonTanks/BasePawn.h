@@ -21,6 +21,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float	GetHealthPercent() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Items")
+	void	UseItem(class UItem* Item);
 
 protected:
 
@@ -42,9 +44,6 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
 	USceneComponent *porjecttileSpawnPoint;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
-	UHealthComponent *health;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<class AProjectile> projectileClass;
 
@@ -56,7 +55,13 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class UCameraShakeBase> DeathCameraShakeClass;
+	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
+	class UIventoryComponent *inventory;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
+	UHealthComponent *health;
 
 
 

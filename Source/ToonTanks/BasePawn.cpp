@@ -2,6 +2,8 @@
 
 
 #include "BasePawn.h"
+#include "Inventory/Item.h"
+#include "Inventory/IventoryComponent.h"
 #include "Projectile.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,6 +29,9 @@ ABasePawn::ABasePawn()
 
 	porjecttileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Porjectile SpawnPoint"));
 	porjecttileSpawnPoint->SetupAttachment(turretMesh);
+
+	inventory = CreateDefaultSubobject<UIventoryComponent>(TEXT("Inventory"));
+	UE_LOG(LogTemp, Display, TEXT("ABasePawn Constructor called for instance: %p"), this);
 	
 
 }
@@ -45,6 +50,14 @@ float	ABasePawn::GetHealthPercent() const
 	return (health->GetHealth() / health->GetMaxHealth());
 }
 
+void	ABasePawn::UseItem(class UItem* Item)
+{
+	if (Item)
+	{
+		Item->Use(this);
+		Item->OnUse(this);
+	}
+}
 
 
 void	ABasePawn::rotateTurret(FVector lookAtTraget)

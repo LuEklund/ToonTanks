@@ -26,6 +26,7 @@ void ATower::BeginPlay()
 {
     Super::BeginPlay();
     tank = Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0));
+    UE_LOG(LogTemp, Display, TEXT("\n=====================\nCREATING TOWER\n========================="));
 
     GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATower::checkFireCondition, fireRate, true);
 }
