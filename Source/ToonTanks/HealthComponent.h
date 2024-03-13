@@ -16,10 +16,14 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
+	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealth() const;
 
 	void SetHealth(float const _health);
+	void IncreaseMaxHealth(float const _health);
 
 protected:
 	// Called when the game starts

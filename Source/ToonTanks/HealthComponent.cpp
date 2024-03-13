@@ -27,7 +27,20 @@ float UHealthComponent::GetHealth() const
 
 void UHealthComponent::SetHealth(float const _health)
 {
-	Health = _health;
+	if (_health > MaxHealth)
+	{
+		Health = MaxHealth;
+	}
+	else
+	{
+		Health = _health;
+	}
+}
+
+void UHealthComponent::IncreaseMaxHealth(float const _health)
+{
+	Health += _health;
+	MaxHealth += _health;
 }
 
 
