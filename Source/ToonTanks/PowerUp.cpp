@@ -3,6 +3,8 @@
 
 #include "PowerUp.h"
 #include "Tank.h"
+#include "Inventory/Item.h"
+#include "Inventory/IventoryComponent.h"
 #include "Components/CapsuleComponent.h"
 
 // Sets default values
@@ -12,7 +14,7 @@ APowerUp::APowerUp()
 	PrimaryActorTick.bCanEverTick = true;
 	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base mesh"));
 	RootComponent = baseMesh;
-
+	item = CreateDefaultSubobject<UItem>(TEXT("Pickup Item"));
 
 }
 
@@ -39,13 +41,13 @@ void APowerUp::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 	ATank *TankActor = Cast<ATank>(OtherActor);
 	if (TankActor)
 	{
-		//TankActor->IncreaseSpeed(250.f);
-		ApplyPowerUpEffect(*TankActor);
+		TankActor->inventory->AddItem(item);
+		//ApplyPowerUpEffect(*TankActor);
     	Destroy();
 	}
 }
 
-void APowerUp::ApplyPowerUpEffect(ATank &_tabk)
+void APowerUp::ApplyPowerUpEffect(ATank &_tank)
 {
 	UE_LOG(LogTemp, Display, TEXT("NO EFFECT"));
 }
