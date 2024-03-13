@@ -25,6 +25,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
     PlayerInputComponent->BindAction(TEXT("fire"), IE_Pressed, this, &ATank::PreFire);
 
+
 }
 
 float	ATank::GetFireCooldownPercent() const
@@ -116,6 +117,7 @@ void	ATank::PreFire()
         GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATank::ResetTimerCooldown, fireRate, false);
     }
 }
+
 
 void    ATank::ResetTimerCooldown()
 {
