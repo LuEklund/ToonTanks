@@ -23,7 +23,7 @@ private:
 public:	
 	// Sets default values for this actor's properties
 	APowerUp();
-	virtual void	ApplyPowerUpEffect(ATank &tank);
+
 
 	UPROPERTY(SaveGame,EditAnywhere, Category="Item")
 	class	UItem	*item;

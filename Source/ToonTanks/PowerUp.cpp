@@ -45,12 +45,7 @@ void APowerUp::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 	if (TankActor)
 	{
 		TankActor->inventory->AddItem(item);
-		//ApplyPowerUpEffect(*TankActor);
     	Destroy();
 	}
 }
 
-void APowerUp::ApplyPowerUpEffect(ATank &_tank)
-{
-	UE_LOG(LogTemp, Display, TEXT("NO EFFECT"));
-}
