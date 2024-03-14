@@ -11,7 +11,6 @@ UIventoryComponent::UIventoryComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 	size = 20;
-	UE_LOG(LogTemp, Display, TEXT("UIventoryComponent CONSTRUCT called for instance: %p"), this);
 
 }
 
@@ -20,12 +19,8 @@ UIventoryComponent::UIventoryComponent()
 void UIventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Display, TEXT("\n=====================\nBEGIN GAME\n========================="));
-	UE_LOG(LogTemp, Display, TEXT("NAME: %s"), *GetOwner()->GetName());
-	UE_LOG(LogTemp, Display, TEXT("UIventoryComponent BeginPlay called for instance: %p"), this);
 	for (UItem* item : DefaultItems)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Adding item!!!!"));
 		AddItem(item);
 	}
 }

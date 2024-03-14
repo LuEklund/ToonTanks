@@ -68,7 +68,6 @@ void	UHealthComponent::DamageTaken(AActor *DamagedActor, float Damage, const UDa
 {
 	if (Damage <= 0.f) return;
 	Health -= Damage;
-	UE_LOG(LogTemp, Display, TEXT("Your message %f"), Health);
 	if (Health <= 0.f && ToonTanksGameMode)
 	{
 		ToonTanksGameMode->ActorDied(GetOwner());

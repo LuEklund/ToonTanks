@@ -34,7 +34,6 @@ void AToonTanksPlayerController::BeginPlay()
 		UE_LOG(LogTemp, Display, TEXT("ERROR NO HUD"));
 	}
 	inventory =  Cast<ABasePawn>(GetPawn())->inventory;
-	UE_LOG(LogTemp, Display, TEXT("UIventoryComponent PLAYERCONTROLLER233 called for instance: %p"), Cast<ABasePawn>(GetPawn())->inventory);
 
 }
 
@@ -42,7 +41,6 @@ void	AToonTanksPlayerController::UseItem(class UItem* Item)
 {
 	if (Item)
 	{
-		//UE_LOG(LogTemp, Display, TEXT("Your message"));
 		Item->Use(Cast<ABasePawn>(GetPawn()));
 		Item->OnUse(Cast<ABasePawn>(GetPawn()));
 	}
@@ -50,10 +48,8 @@ void	AToonTanksPlayerController::UseItem(class UItem* Item)
 
 UIventoryComponent*	AToonTanksPlayerController::GetInventory()
 {
-	UE_LOG(LogTemp, Display, TEXT("\n\n\n\n\nHEEEEE\n\n\n\n\n\n"));
-	UE_LOG(LogTemp, Display, TEXT("RIGHT FUNCTION instance: %p"), Cast<ABasePawn>(GetPawn())->inventory);
 	return(inventory);
-	if (!GetPawn())
+	/* if (!GetPawn())
 	{
 		UE_LOG(LogTemp, Display, TEXT("\n=====================\nNO PAWN\n========================="));
 	}
@@ -70,7 +66,7 @@ UIventoryComponent*	AToonTanksPlayerController::GetInventory()
 	{
 		UE_LOG(LogTemp, Display, TEXT("\n=====================\nGET NO INV3\n========================="));
 	}
-	return (Cast<ABasePawn>(GetPawn())->inventory);
+	return (Cast<ABasePawn>(GetPawn())->inventory); */
 }
 
 

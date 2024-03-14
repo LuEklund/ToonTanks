@@ -111,7 +111,6 @@ void	ATank::PreFire()
 
     if (canFire)
     {
-	    UE_LOG(LogTemp, Display, TEXT("1"));
         fire();
         canFire = false;
         GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATank::ResetTimerCooldown, fireRate, false);

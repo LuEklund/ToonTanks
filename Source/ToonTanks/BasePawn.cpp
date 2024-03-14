@@ -31,7 +31,6 @@ ABasePawn::ABasePawn()
 	porjecttileSpawnPoint->SetupAttachment(turretMesh);
 
 	inventory = CreateDefaultSubobject<UIventoryComponent>(TEXT("Inventory"));
-	UE_LOG(LogTemp, Display, TEXT("ABasePawn Constructor called for instance: %p"), this);
 	
 
 }
