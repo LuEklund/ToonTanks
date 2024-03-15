@@ -23,9 +23,9 @@ void ASpawnPod::BeginPlay()
 // Called every frame
 void ASpawnPod::Tick(float DeltaTime)
 {
-	FVector	newPos(this->GetActorLocation());
-
 	Super::Tick(DeltaTime);
+
+	FVector	newPos(this->GetActorLocation());
 	if (this->GetActorLocation().Z <= 81)
 	{
 		newPos.Z = 85.f;
@@ -34,7 +34,7 @@ void ASpawnPod::Tick(float DeltaTime)
 	}
 	else
 	{
-		newPos.Z += -450 * DeltaTime;
+		newPos.Z += -FallSpeed * DeltaTime;
 		this->SetActorLocation(newPos);
 	}
 }

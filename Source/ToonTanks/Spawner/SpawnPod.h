@@ -18,6 +18,9 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Base")
 	UStaticMeshComponent	*BaseMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPod")
+	float	FallSpeed = 1000.f;
+
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnTower")
 	TSubclassOf<AActor>	SpawnEnemy;
 protected:

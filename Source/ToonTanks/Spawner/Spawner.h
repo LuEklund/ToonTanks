@@ -20,6 +20,14 @@ public:
 	// Sets default values for this actor's properties
 	ASpawner();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPod")
+	bool	ShouldSpawn = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPod")
+	float	SpawnTimer = 1.f;
+
+
+
 	UPROPERTY(VisibleAnywhere, Category = "Base")
 	UStaticMeshComponent	*BaseMesh;
 
