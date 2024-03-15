@@ -18,7 +18,7 @@ ASpawner::ASpawner()
 void ASpawner::BeginPlay()
 {
 	Super::BeginPlay();
-	GetWorldTimerManager().SetTimer(SpawnRateTimerHandle, this, &ASpawner::SpawnSpawnPod, 1.f, true);
+	GetWorldTimerManager().SetTimer(SpawnRateTimerHandle, this, &ASpawner::SpawnSpawnPod, SpawnTimer, true);
 }
 
 void	ASpawner::SpawnSpawnPod()
@@ -27,7 +27,7 @@ void	ASpawner::SpawnSpawnPod()
 	int	num = FMath::RandRange(0, SpawnableEntities.Num());
 	num -= 1;
 	UE_LOG(LogTemp, Display, TEXT("Array Size %i, num %i"), SpawnableEntities.Num(), num);
-	if (num >= 0)
+	if (ShouldSpawn && num >= 0)
 	{
 		FVector pos(this->GetActorLocation());
 		pos.Z -= 50.f;
