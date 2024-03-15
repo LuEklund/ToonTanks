@@ -26,7 +26,7 @@ public:
 
 
 	UPROPERTY(SaveGame,EditAnywhere, Category="Item")
-	class	UItem	*item;
+	TSubclassOf<class UItem>	item;
 
 
 protected:

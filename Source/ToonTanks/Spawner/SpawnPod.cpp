@@ -26,15 +26,15 @@ void ASpawnPod::Tick(float DeltaTime)
 	FVector	newPos(this->GetActorLocation());
 
 	Super::Tick(DeltaTime);
-	if (this->GetActorLocation().Z <= 0)
+	if (this->GetActorLocation().Z <= 81)
 	{
-		newPos.Z = 180.f;
-		ATower *spawnActor = GetWorld()->SpawnActor<ATower>(SpawnTower, newPos, FRotator::ZeroRotator);
+		newPos.Z = 85.f;
 		Destroy();
+		AActor *spawnActor = GetWorld()->SpawnActor<AActor>(SpawnEnemy, newPos, FRotator::ZeroRotator);
 	}
 	else
 	{
-		newPos.Z += -50 * DeltaTime;
+		newPos.Z += -450 * DeltaTime;
 		this->SetActorLocation(newPos);
 	}
 }

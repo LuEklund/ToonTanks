@@ -16,8 +16,6 @@ APowerUp::APowerUp()
 	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base mesh"));
 	RootComponent = baseMesh;
 
-	item = CreateDefaultSubobject<UItem>(TEXT("Pickup Item"));
-
 
 }
 
@@ -44,7 +42,7 @@ void APowerUp::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Other
 	ATank *TankActor = Cast<ATank>(OtherActor);
 	if (TankActor)
 	{
-		TankActor->inventory->AddItem(item);
+		TankActor->inventory->AddItem(NewObject<UItem>(TankActor, item));
     	Destroy();
 	}
 }

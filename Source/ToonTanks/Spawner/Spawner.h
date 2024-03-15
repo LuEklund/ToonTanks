@@ -11,6 +11,11 @@ class TOONTANKS_API ASpawner : public AActor
 {
 	GENERATED_BODY()
 
+private:
+	FTimerHandle	SpawnRateTimerHandle;
+
+	void	SpawnSpawnPod();
+
 public:	
 	// Sets default values for this actor's properties
 	ASpawner();
@@ -21,7 +26,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnPod")
 	TSubclassOf<class ASpawnPod> SpawnPodClass;
 
-	TArray<AActor *> SpawnableEntities;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnArena")
+	FBox	SpawnArea;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnAbleEntities")
+	TArray<TSubclassOf<AActor>> SpawnableEntities;
 
 protected:
 	// Called when the game starts or when spawned

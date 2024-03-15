@@ -3,6 +3,7 @@
 
 #include "Spawner.h"
 #include "SpawnPod.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 ASpawner::ASpawner()
@@ -17,17 +18,23 @@ ASpawner::ASpawner()
 void ASpawner::BeginPlay()
 {
 	Super::BeginPlay();
+	GetWorldTimerManager().SetTimer(SpawnRateTimerHandle, this, &ASpawner::SpawnSpawnPod, 1.f, true);
+}
+
+void	ASpawner::SpawnSpawnPod()
+{
+	FVector RandomPoint = UKismetMathLibrary::RandomPointInBoundingBox_Box(SpawnArea);
 	int	num = FMath::RandRange(0, SpawnableEntities.Num());
+	num -= 1;
 	UE_LOG(LogTemp, Display, TEXT("Array Size %i, num %i"), SpawnableEntities.Num(), num);
 	if (num >= 0)
 	{
 		FVector pos(this->GetActorLocation());
 		pos.Z -= 50.f;
 
-		ASpawnPod *spawnActor = GetWorld()->SpawnActor<ASpawnPod>(SpawnPodClass, pos, FRotator::ZeroRotator);
-		//AActor* spawnActor = GetWorld()->SpawnActor<ASpawnPod>(ASpawnPod::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
+		ASpawnPod *SpawnPod = GetWorld()->SpawnActor<ASpawnPod>(SpawnPodClass, RandomPoint, FRotator::ZeroRotator);
+		SpawnPod->SpawnEnemy = SpawnableEntities[num];
 	}
-	
 }
 
 
