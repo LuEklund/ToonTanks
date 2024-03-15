@@ -18,8 +18,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Base")
 	UStaticMeshComponent	*BaseMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnTower")
-	TSubclassOf<class ATower>	SpawnTower;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SpawnTower")
+	TSubclassOf<AActor>	SpawnEnemy;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
