@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BasePawn.h"
+#include "BaseCharacter.h"
 #include "Tank.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOONTANKS_API ATank : public ABasePawn
+class TOONTANKS_API ATank : public ABaseCharacter
 {
 	GENERATED_BODY()
 
@@ -32,15 +32,28 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Combat")
 	float	GetFireCooldownPercent() const;
 
-	void	IncreaseSpeed(float speed);
-
-
-
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputMappingContext	*Inputmapping;
+	
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction	*ForwardAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction	*BackwardAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction	*LeftAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction	*RightAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	class UInputAction	*FireAction;
+	
 private:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float	speed = 500.f;	
@@ -61,8 +74,10 @@ private:
 
 	APlayerController *TankPlayerController;
 
-	void			Move(float value);
-	void			Turn(float value);
+	void			MoveForward();
+	void			MoveBackward();
+	void			RotateLeft();
+	void			RotateRight();
 
 	void			PreFire();
 	void			ResetTimerCooldown();

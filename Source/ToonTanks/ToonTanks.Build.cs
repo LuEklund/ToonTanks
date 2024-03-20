@@ -17,7 +17,8 @@ public class ToonTanks : ModuleRules
 			"UMG",
 			"AIModule",
 			"GameplayTasks",
-			"NavigationSystem"
+			"NavigationSystem",
+			"EnhancedInput"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

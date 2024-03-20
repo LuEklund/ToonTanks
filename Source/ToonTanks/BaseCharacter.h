@@ -3,20 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "HealthComponent.h"
-#include "BasePawn.generated.h"
+#include "GameFramework/Character.h"
+#include "BaseCharacter.generated.h"
 
 UCLASS()
-class TOONTANKS_API ABasePawn : public APawn
+class TOONTANKS_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
-	ABasePawn();
+	ABaseCharacter();
+	
+	virtual void	HandleDestruction();
 
-	void	HandleDestruction();
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float	GetHealthPercent() const;
@@ -25,16 +26,10 @@ public:
 	void	UseItem(class UItem* Item);
 
 protected:
-
 	void	rotateTurret(FVector lookAtTraget);
 	void	fire();
 
-
-
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
-	class UCapsuleComponent *caplsuleComponent;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
 	UStaticMeshComponent *baseMesh;
 
@@ -50,21 +45,19 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Death")
 	UParticleSystem *DeathExplosion;
 
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, Category = "Death")
 	class	USoundBase *DeathSound;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class UCameraShakeBase> DeathCameraShakeClass;
+
+	UPROPERTY(EditAnywhere, Category="MOvement")
+	class UMovementComponent	*MovementComponent;
 	
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
 	class UIventoryComponent *inventory;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
-	UHealthComponent *health;
-
-
-
-
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class UHealthComponent *health;
 };

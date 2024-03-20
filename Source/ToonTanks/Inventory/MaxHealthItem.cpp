@@ -3,11 +3,13 @@
 
 #include "MaxHealthItem.h"
 #include "IventoryComponent.h"
-#include "../BasePawn.h"
+#include "../BaseCharacter.h"
+#include "../HealthComponent.h"
 
 
-void UMaxHealthItem::Use(class ABasePawn* character)
+void UMaxHealthItem::Use(AActor* a)
 {
+    ABaseCharacter *character = Cast<ABaseCharacter>(a);
     if (character)
     {
         character->health->IncreaseMaxHealth(HealthToIncrease);

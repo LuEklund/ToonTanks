@@ -23,11 +23,15 @@ void ASpawner::BeginPlay()
 
 void	ASpawner::SpawnSpawnPod()
 {
+	if (ShouldSpawn == false)
+	{
+		return ;
+	}
 	FVector RandomPoint = UKismetMathLibrary::RandomPointInBoundingBox_Box(SpawnArea);
 	int	num = FMath::RandRange(0, SpawnableEntities.Num());
 	num -= 1;
 	UE_LOG(LogTemp, Display, TEXT("Array Size %i, num %i"), SpawnableEntities.Num(), num);
-	if (ShouldSpawn && num >= 0)
+	if (num >= 0)
 	{
 		FVector pos(this->GetActorLocation());
 		pos.Z -= 50.f;

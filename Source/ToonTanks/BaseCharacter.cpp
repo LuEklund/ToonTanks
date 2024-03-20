@@ -1,28 +1,28 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BasePawn.h"
-#include "Inventory/Item.h"
-#include "Inventory/IventoryComponent.h"
-#include "Projectile.h"
-#include "Components/CapsuleComponent.h"
+#include "BaseCharacter.h"
 #include "Kismet/GameplayStatics.h"
-
 #include "Camera/CameraShakeBase.h"
 
+#include "Inventory/Item.h"
+#include "Projectile.h"
+
+#include "HealthComponent.h"
+#include "Inventory/IventoryComponent.h"
+#include "GameFramework/MovementComponent.h"
 
 // Sets default values
-ABasePawn::ABasePawn()
+ABaseCharacter::ABaseCharacter()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	caplsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
-	RootComponent = caplsuleComponent;
 
 	health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+	MovementComponent = CreateDefaultSubobject<UMovementComponent>(TEXT("Movement"));
 
 	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	baseMesh->SetupAttachment(caplsuleComponent);
+	baseMesh->SetupAttachment(RootComponent);
 
 	turretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
 	turretMesh->SetupAttachment(baseMesh);
@@ -35,21 +35,26 @@ ABasePawn::ABasePawn()
 
 }
 
-void	ABasePawn::HandleDestruction()
+void ABaseCharacter::HandleDestruction()
 {
 	UGameplayStatics::SpawnEmitterAtLocation(this, DeathExplosion, GetActorLocation(), GetActorRotation());
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 	GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass);
 }
 
+// Called to bind functionality to input
+void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
 
-float	ABasePawn::GetHealthPercent() const
+float ABaseCharacter::GetHealthPercent() const
 {
 	return (health->GetHealth() / health->GetMaxHealth());
 }
 
-void	ABasePawn::UseItem(class UItem* Item)
+void ABaseCharacter::UseItem(UItem* Item)
 {
 	if (Item)
 	{
@@ -58,37 +63,24 @@ void	ABasePawn::UseItem(class UItem* Item)
 	}
 }
 
-
-void	ABasePawn::rotateTurret(FVector lookAtTraget)
+void ABaseCharacter::rotateTurret(FVector lookAtTraget)
 {
 	FVector toTagregt = lookAtTraget - turretMesh->GetComponentLocation();
 	FRotator lookAtRotation = FRotator(0.f, toTagregt.Rotation().Yaw, 0.f);
 
 	turretMesh->SetWorldRotation(FMath::RInterpTo(
-		turretMesh->GetComponentRotation(),
-		lookAtRotation,
-		UGameplayStatics::GetWorldDeltaSeconds(this),
-		20.f));
+	turretMesh->GetComponentRotation(),
+	lookAtRotation,
+	UGameplayStatics::GetWorldDeltaSeconds(this),
+	20.f));
 }
 
-void	ABasePawn::fire()
+void ABaseCharacter::fire()
 {
-	/*
-	DrawDebugSphere(
-		GetWorld(),
-		porjecttileSpawnPoint->GetComponentLocation(),
-		20.f,
-		12,
-		FColor::Green,
-		false,
-		3.f);*/
 	AProjectile	*Projectile = GetWorld()->SpawnActor<AProjectile>(
-		projectileClass,
-		porjecttileSpawnPoint->GetComponentLocation(),
-		porjecttileSpawnPoint->GetComponentRotation());
-		Projectile->SetOwner(this);
+	projectileClass,
+	porjecttileSpawnPoint->GetComponentLocation(),
+	porjecttileSpawnPoint->GetComponentRotation());
+	Projectile->SetOwner(this);
 }
-
-
-
 

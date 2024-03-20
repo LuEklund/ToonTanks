@@ -3,11 +3,13 @@
 
 #include "HealItem.h"
 #include "IventoryComponent.h"
-#include "../BasePawn.h"
+#include "../BaseCharacter.h"
+#include "../HealthComponent.h"
 
 
-void UHealItem::Use(class ABasePawn* character)
+void UHealItem::Use(AActor* a)
 {
+    ABaseCharacter *character = Cast<ABaseCharacter>(a);
     if (character)
     {
         character->health->SetHealth(character->health->GetHealth() + HealthToHeal);

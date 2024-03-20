@@ -4,19 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BehaviorTree.h"
-#include "BasePawn.h"
+#include "BaseCharacter.h"
 #include "EnemyTank.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOONTANKS_API AEnemyTank : public ABasePawn
+class TOONTANKS_API AEnemyTank : public ABaseCharacter
 {
 	GENERATED_BODY()
 
 public:
 	UBehaviorTree *GetBehaviorTree() const {return (this->Tree);}
+
+	AEnemyTank();
+
+	void	HandleDestruction();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta=(AllowPrivateAccess="yes"))
 	float MoveSpeed = 100.f;
@@ -28,4 +32,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI", meta=(AllowPrivateAccess="yes"))
 	UBehaviorTree *Tree;
 
+private:
+	class UAIPerceptionStimuliSourceComponent *StimulusSource;
+
+	void	SetupStimuluSource();
 };
