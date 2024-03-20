@@ -4,7 +4,7 @@
 #include "ToonTanksPlayerController.h"
 #include "Inventory/Item.h"
 #include "Inventory/IventoryComponent.h"
-#include "BasePawn.h"
+#include "BaseCharacter.h"
 #include "GameFramework/Pawn.h"
 
 void	AToonTanksPlayerController::SetPlayerEnabledSate(bool bPlayerEnable)
@@ -23,6 +23,7 @@ void	AToonTanksPlayerController::SetPlayerEnabledSate(bool bPlayerEnable)
 void AToonTanksPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
 	HUD = CreateWidget(this, HUDClass);
 	if (HUD != nullptr)
 	{
@@ -33,16 +34,19 @@ void AToonTanksPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Display, TEXT("ERROR NO HUD"));
 	}
-	inventory =  Cast<ABasePawn>(GetPawn())->inventory;
+	UE_LOG(LogTemp, Display, TEXT("This: %p, GetPawn %p, GetCharacter %p"), this, GetPawn(), GetCharacter());
+
+	inventory =  Cast<ABaseCharacter>(GetCharacter())->inventory;
 
 }
 
 void	AToonTanksPlayerController::UseItem(class UItem* Item)
 {
+
 	if (Item)
 	{
-		Item->Use(Cast<ABasePawn>(GetPawn()));
-		Item->OnUse(Cast<ABasePawn>(GetPawn()));
+		Item->Use(Cast<ABaseCharacter>(GetCharacter()));
+		Item->OnUse(Cast<ABaseCharacter>(GetCharacter()));
 	}
 }
 
@@ -53,12 +57,12 @@ UIventoryComponent*	AToonTanksPlayerController::GetInventory()
 	{
 		UE_LOG(LogTemp, Display, TEXT("\n=====================\nNO PAWN\n========================="));
 	}
-	if (!Cast<ABasePawn>(GetPawn()))
+	if (!Cast<ABaseCharacter>(GetPawn()))
 	{
 		UE_LOG(LogTemp, Display, TEXT("\n=====================\nBAD CAST\n========================="));
 	}
 	UE_LOG(LogTemp, Display, TEXT("Your message %s"), *GetPawn()->GetName());
-	if (Cast<ABasePawn>(GetPawn())->inventory)
+	if (Cast<ABaseCharacter>(GetPawn())->inventory)
 	{
 		UE_LOG(LogTemp, Display, TEXT("\n=====================\nGET INV2\n========================="));
 	}
@@ -66,7 +70,7 @@ UIventoryComponent*	AToonTanksPlayerController::GetInventory()
 	{
 		UE_LOG(LogTemp, Display, TEXT("\n=====================\nGET NO INV3\n========================="));
 	}
-	return (Cast<ABasePawn>(GetPawn())->inventory); */
+	return (Cast<ABaseCharacter>(GetPawn())->inventory); */
 }
 
 

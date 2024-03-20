@@ -10,7 +10,7 @@ UItem::UItem()
     UseActionText = FText::FromString("Use");
 }
 
-void UItem::Use(class ABasePawn* character)
+void UItem::Use(class AActor* character)
 {
 
 }

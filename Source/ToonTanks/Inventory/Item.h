@@ -45,10 +45,10 @@ public:
 	UPROPERTY()
 	class UIventoryComponent*	OwningIventory;
 
-	virtual void Use(class ABasePawn* character);
+	virtual void Use(class AActor* character);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void	OnUse(class ABasePawn* character);
+	void	OnUse(class AActor* character);
 
 	virtual class UWorld* GetWorld() const {return world;}
 };

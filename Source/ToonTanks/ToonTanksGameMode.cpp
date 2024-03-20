@@ -4,7 +4,7 @@
 #include "ToonTanksGameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "Tank.h"
-#include "Tower.h"
+#include "BaseCharacter.h"
 #include "ToonTanksPlayerController.h"
 
 void	AToonTanksGameMode::ActorDied(AActor *DeadActor)
@@ -18,15 +18,16 @@ void	AToonTanksGameMode::ActorDied(AActor *DeadActor)
             GameOver(false);
         }
     }
-    else if (ATower * DestroyedTower = Cast<ATower>(DeadActor))
+    else if (ABaseCharacter * Enemy = Cast<ABaseCharacter>(DeadActor))
     {
-        DestroyedTower->HandleDestruction();
-        --TargetTowers;
-        if (TargetTowers == 0)
-        {
-            GameOver(true);
-        }
+        Enemy->HandleDestruction();
+        // --TargetTowers;
+        // if (TargetTowers == 0)
+        // {
+        //     GameOver(true);
+        // }
     }
+
 }
 
 
@@ -64,9 +65,9 @@ void	AToonTanksGameMode::HandleGameStart()
 int32	AToonTanksGameMode::GetTargetTowerCount()
 {
     TArray<AActor *>    Towers;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATower::StaticClass(), Towers);
+    //UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATower::StaticClass(), Towers);
 
-    return (Towers.Num());
+    return (1);
 }
 
 

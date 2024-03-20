@@ -7,6 +7,11 @@
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
 
+#include "InputMappingContext.h"
+#include "InputAction.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+
 ATank::ATank()
 {
     springArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
@@ -20,11 +25,35 @@ ATank::ATank()
 void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-    PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
-    PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
 
-    PlayerInputComponent->BindAction(TEXT("fire"), IE_Pressed, this, &ATank::PreFire);
+    if(APlayerController *PlayerController =  Cast<APlayerController>(Controller))
+    {
+        if(UEnhancedInputLocalPlayerSubsystem *Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+        {
+            Subsystem->AddMappingContext(Inputmapping, 0);
+        }
+        else
+        {
+            UE_LOG(LogTemp, Display, TEXT("UEnhancedInputLocalPlayerSubsystem: FALIED"));
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Display, TEXT("APlayerController: FALIED"));
+    }
+    if (UEnhancedInputComponent *Input = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+    {
+        Input->BindAction(ForwardAction, ETriggerEvent::Triggered, this, &ATank::MoveForward);
+        Input->BindAction(BackwardAction, ETriggerEvent::Triggered, this, &ATank::MoveBackward);
+        Input->BindAction(LeftAction, ETriggerEvent::Triggered, this, &ATank::RotateLeft);
+        Input->BindAction(RightAction, ETriggerEvent::Triggered, this, &ATank::RotateRight);
+        Input->BindAction(FireAction, ETriggerEvent::Triggered, this, &ATank::PreFire);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Display, TEXT("UEnhancedInputComponent: FALIED"));
 
+    }
 
 }
 
@@ -48,16 +77,6 @@ void ATank::Tick(float DeltaTime)
             ECollisionChannel::ECC_Visibility,
             false,
             hitResult);
-        /*
-        DrawDebugSphere(
-            GetWorld(),
-            hitResult.ImpactPoint,
-            20,
-            12,
-            FColor::Red,
-            false,
-            -1.f);*/
-
         rotateTurret(hitResult.ImpactPoint);
     }
 
@@ -80,28 +99,43 @@ void ATank::BeginPlay()
 	TankPlayerController = Cast<APlayerController>(GetController());
 }
 
-void	ATank::Move(float value)
+void	ATank::MoveForward()
+{
+    UE_LOG(LogTemp, Display, TEXT("HERE"));
+    float dt = UGameplayStatics::GetWorldDeltaSeconds(this->GetWorld());
+    FVector deltaLocation(0.f);
+    deltaLocation.X = dt * speed;
+    AddActorLocalOffset(deltaLocation, true);
+}
+
+void	ATank::MoveBackward()
 {
     float dt = UGameplayStatics::GetWorldDeltaSeconds(this->GetWorld());
-
     FVector deltaLocation(0.f);
-    deltaLocation.X = value * dt * speed;
-
+    deltaLocation.X = dt * -speed;
     AddActorLocalOffset(deltaLocation, true);
-
 }
 
 
-void	ATank::Turn(float value)
+void	ATank::RotateLeft()
 {
     float dt = UGameplayStatics::GetWorldDeltaSeconds(this->GetWorld());
 
     FRotator deltaRotation = FRotator::ZeroRotator;
-    deltaRotation.Yaw = value * dt * turnRate;
-
-    AddActorLocalRotation(deltaRotation, true);
-
+    deltaRotation.Yaw = -dt * turnRate;
+    AddActorLocalRotation(FRotator(deltaRotation), true);
 }
+
+
+void	ATank::RotateRight()
+{
+    float dt = UGameplayStatics::GetWorldDeltaSeconds(this->GetWorld());
+    
+    FRotator deltaRotation = FRotator::ZeroRotator;
+    deltaRotation.Yaw = dt * turnRate;
+    AddActorLocalRotation(deltaRotation, true);
+}
+
 
 
 void	ATank::PreFire()
@@ -122,11 +156,4 @@ void    ATank::ResetTimerCooldown()
 {
     canFire = true;
 }
-
-void	ATank::IncreaseSpeed(float _speed)
-{
-    speed += _speed;
-}
-
-
 

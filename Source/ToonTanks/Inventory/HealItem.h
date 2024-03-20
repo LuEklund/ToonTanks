@@ -19,6 +19,6 @@ public:
 	float	HealthToHeal;
 
 protected:
-	virtual void Use(class ABasePawn* character) override;
+	virtual void Use(AActor* character) override;
 	
 };
