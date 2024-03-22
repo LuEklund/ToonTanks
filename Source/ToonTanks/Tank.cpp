@@ -11,6 +11,7 @@
 #include "InputAction.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "ToonTanksSaveGame.h"
 
 ATank::ATank()
 {
@@ -57,6 +58,11 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void ATank::AddHighScore(int32  _score)
+{
+    HighScore += _score;
+}
+
 float	ATank::GetFireCooldownPercent() const
 {
     float cooldown = this->GetWorldTimerManager().GetTimerRemaining(this->fireRateTimerHandle);
@@ -101,7 +107,6 @@ void ATank::BeginPlay()
 
 void	ATank::MoveForward()
 {
-    UE_LOG(LogTemp, Display, TEXT("HERE"));
     float dt = UGameplayStatics::GetWorldDeltaSeconds(this->GetWorld());
     FVector deltaLocation(0.f);
     deltaLocation.X = dt * speed;
@@ -140,9 +145,6 @@ void	ATank::RotateRight()
 
 void	ATank::PreFire()
 {
-    float cooldown = this->GetWorldTimerManager().GetTimerRemaining(this->fireRateTimerHandle);
-
-
     if (canFire)
     {
         fire();

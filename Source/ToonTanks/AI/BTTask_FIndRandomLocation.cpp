@@ -7,6 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 
 UBTTask_FIndRandomLocation::UBTTask_FIndRandomLocation(FObjectInitializer const& ObjectInitializer)
+    : Super(ObjectInitializer)
 {
     NodeName = "Find Random Location In NavMesh";
     UE_LOG(LogTemp, Display, TEXT("Origin1 "));
@@ -14,7 +15,6 @@ UBTTask_FIndRandomLocation::UBTTask_FIndRandomLocation(FObjectInitializer const&
 
 EBTNodeResult::Type UBTTask_FIndRandomLocation::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
-    UE_LOG(LogTemp, Display, TEXT("Origin2 "));
     //Get AI Controller and its npc
     if (ATank_AIController * const controller = Cast<ATank_AIController>(OwnerComp.GetAIOwner()))
     {
@@ -29,9 +29,6 @@ EBTNodeResult::Type UBTTask_FIndRandomLocation::ExecuteTask(UBehaviorTreeCompone
                 FNavLocation Loc;
                 if (NavSys->GetRandomPointInNavigableRadius(Origin, SearchRadius, Loc))
                 {
-                    UE_LOG(LogTemp, Display, TEXT("Origin x: %f, y: %f, z: %f"), Origin.X,  Origin.Y,  Origin.Z);
-                    UE_LOG(LogTemp, Display, TEXT("Loc.Location x: %f, y: %f, z: %f"), Loc.Location.X,  Loc.Location.Y,  Loc.Location.Z);
-
                     OwnerComp.GetBlackboardComponent()->SetValueAsVector(GetSelectedBlackboardKey(), Loc.Location);
                 }
                 //Finish with Success
