@@ -26,8 +26,8 @@ public:
 	void	UseItem(class UItem* Item);
 
 protected:
-	void	rotateTurret(FVector lookAtTraget);
 	void	fire();
+	void	rotateTurret(FVector lookAtTraget);
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "True"))
@@ -53,6 +53,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="MOvement")
 	class UMovementComponent	*MovementComponent;
+
+
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Components")
@@ -60,4 +62,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	class UHealthComponent *health;
+
+	FTimerHandle	fireRateTimerHandle;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float			fireRate = .51f;
+
+	int32			ScoreOnDeath = 1;
+
 };

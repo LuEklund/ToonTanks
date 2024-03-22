@@ -29,6 +29,9 @@ public:
 
 	bool	bAlive = true;
 
+	void	AddHighScore(int32 _score);
+	int32	GetHighScore() const {return (HighScore);}
+
 	UFUNCTION(BlueprintPure, Category = "Combat")
 	float	GetFireCooldownPercent() const;
 
@@ -61,9 +64,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float	turnRate = 50.f;
 
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	FTimerHandle	fireRateTimerHandle;
-	float			fireRate = .51f;
+	int32			HighScore = 0;
 	bool			canFire = true;
 
 	

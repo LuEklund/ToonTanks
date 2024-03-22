@@ -34,10 +34,7 @@ void AToonTanksPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Display, TEXT("ERROR NO HUD"));
 	}
-	UE_LOG(LogTemp, Display, TEXT("This: %p, GetPawn %p, GetCharacter %p"), this, GetPawn(), GetCharacter());
-
 	inventory =  Cast<ABaseCharacter>(GetCharacter())->inventory;
-
 }
 
 void	AToonTanksPlayerController::UseItem(class UItem* Item)

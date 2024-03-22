@@ -9,7 +9,9 @@
 #include "Kismet/GameplayStatics.h"
 
 UBTTask_FindPlayerLocation::UBTTask_FindPlayerLocation(FObjectInitializer const& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
+	TEXT("FInd layer location");
 }
 
 EBTNodeResult::Type UBTTask_FindPlayerLocation::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

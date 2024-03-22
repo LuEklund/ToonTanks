@@ -9,6 +9,7 @@
 #include "ToonTanks/Tank.h"
 
 ATank_AIController::ATank_AIController(FObjectInitializer const& ObjectInitializer)
+    : Super(ObjectInitializer)
 {
     SetupPerceptionSystem();
 
@@ -18,7 +19,6 @@ ATank_AIController::ATank_AIController(FObjectInitializer const& ObjectInitializ
 
 void ATank_AIController::OnPossess(APawn *InPawn)
 {
-    UE_LOG(LogTemp, Display, TEXT("POSSESED AI Controller"));
     Super::OnPossess(InPawn);
     AEnemyTank * const npc = Cast<AEnemyTank>(InPawn);
     
@@ -40,7 +40,7 @@ void ATank_AIController::SetupPerceptionSystem()
         SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
         SightConfig->SightRadius = 500.f;
         SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.f;
-        SightConfig->PeripheralVisionAngleDegrees = 90.f;
+        SightConfig->PeripheralVisionAngleDegrees = 360.f;
         SightConfig->SetMaxAge(5.f);
         SightConfig->AutoSuccessRangeFromLastSeenLocation = 520.f;
         SightConfig->DetectionByAffiliation.bDetectEnemies = true;
