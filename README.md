@@ -1,6 +1,7 @@
 # TankGame
 ![](https://github.com/LuEklund/ToonTanks/blob/master/AnimationToon2.gif)
 
+can download here [itch.io](https://lucas-eklund.itch.io/tankgame)
 
 A Simple game based on ToonTanks course from GameDev.tv
 Added 
