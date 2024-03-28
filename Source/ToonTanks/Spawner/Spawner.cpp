@@ -37,7 +37,6 @@ void	ASpawner::SpawnSpawnPod()
 	ASpawnPod *SpawnPod = GetWorld()->SpawnActor<ASpawnPod>(SpawnPodClass, RandomPoint, FRotator::ZeroRotator);
 	SpawnPod->SpawnEnemy = SpawnableEntities[num];
 
->>>>>>> 0697f8664843a586889cbd27a9930eccc176803c
 }
 
 
