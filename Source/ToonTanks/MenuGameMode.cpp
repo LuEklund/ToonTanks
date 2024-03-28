@@ -16,6 +16,7 @@ void AMenuGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	//load saved game
+
 	UToonTanksSaveGame *SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::CreateSaveGameObject(UToonTanksSaveGame::StaticClass()));
 	// Create and Save new game
 	if (SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::LoadGameFromSlot("Default", 0)))
@@ -30,7 +31,5 @@ void AMenuGameMode::BeginPlay()
 		// GEngine->AddOnScreenDebugMessage(-1, 5-false, FColor::Green, TEXT("Created Game save"));
 
 	}
-	//SaveGameInstance = UGameplayStatics::SaveGameToSlot(SaveGameInstance, "Default", 0);
-
 
 }

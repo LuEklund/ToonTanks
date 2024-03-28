@@ -23,17 +23,21 @@ void ASpawner::BeginPlay()
 
 void	ASpawner::SpawnSpawnPod()
 {
+
 	if (ShouldSpawn == false || SpawnableEntities.Num() < 1)
 	{
 		return ;
 	}
 	FVector RandomPoint = UKismetMathLibrary::RandomPointInBoundingBox_Box(SpawnArea);
+
 	int	num = FMath::RandRange(0, SpawnableEntities.Num() - 1);
 	FVector pos(this->GetActorLocation());
 	pos.Z -= 50.f;
 
 	ASpawnPod *SpawnPod = GetWorld()->SpawnActor<ASpawnPod>(SpawnPodClass, RandomPoint, FRotator::ZeroRotator);
 	SpawnPod->SpawnEnemy = SpawnableEntities[num];
+
+>>>>>>> 0697f8664843a586889cbd27a9930eccc176803c
 }
 
 
