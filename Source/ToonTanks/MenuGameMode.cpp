@@ -16,18 +16,21 @@ void AMenuGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	//load saved game
-	UToonTanksSaveGame *SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::LoadGameFromSlot("Default", 0));
-	if (SaveGameInstance)
+	UToonTanksSaveGame *SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::CreateSaveGameObject(UToonTanksSaveGame::StaticClass()));
+	// Create and Save new game
+	if (SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::LoadGameFromSlot("Default", 0)))
 	{
-		//Get current Highscore
 		Highscore = SaveGameInstance->Highscore;
+		// FString s = FString::Printf(TEXT("loaded game save, %d, %d"), Highscore,  SaveGameInstance->Highscore);
+		// GEngine->AddOnScreenDebugMessage(-1, 5-false, FColor::Green,s);
 	}
 	else
 	{
-		// Create and Save new game
-		SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::CreateSaveGameObject(UToonTanksSaveGame::StaticClass()));
-		UGameplayStatics::SaveGameToSlot(SaveGameInstance, "Default", 0);
-		GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Red, FPaths::ProjectSavedDir());
+		UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("Default"), 0);
+		// GEngine->AddOnScreenDebugMessage(-1, 5-false, FColor::Green, TEXT("Created Game save"));
+
 	}
+	//SaveGameInstance = UGameplayStatics::SaveGameToSlot(SaveGameInstance, "Default", 0);
+
 
 }

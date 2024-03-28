@@ -76,25 +76,28 @@ int32	AToonTanksGameMode::GetTargetTowerCount()
 
 void AToonTanksGameMode::SaveHighScore()
 {
-    GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Red, FPaths::ProjectSavedDir());
 
     //create instance of save game class
     UToonTanksSaveGame *SaveGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::CreateSaveGameObject(UToonTanksSaveGame::StaticClass()));
-
-    //Get the score
-    int32   RoundScore = Tank->GetHighScore();
-
-    //get the saved game instance
-    if (UToonTanksSaveGame *PreviousGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::LoadGameFromSlot("Default", 0)))
+    if (Tank->GetHighScore() > SaveGameInstance->Highscore)
     {
-        //if new highscore save
-        if (RoundScore > PreviousGameInstance->Highscore)
-        {
-            SaveGameInstance->Highscore = Tank->GetHighScore();
-            //save the game instance
-            UGameplayStatics::SaveGameToSlot(SaveGameInstance, "Default", 0);
-        }
+        SaveGameInstance->Highscore = Tank->GetHighScore();
+        UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("Default"), 0);
     }
+    // FString s = FString::Printf(TEXT("GAME SAVED %d, %d"), SaveGameInstance->Highscore, Tank->GetHighScore());
+    // GEngine->AddOnScreenDebugMessage(-1, 5-false, FColor::Green, s);
+    //get the saved game instance
+    // if (UToonTanksSaveGame *PreviousGameInstance = Cast<UToonTanksSaveGame>(UGameplayStatics::LoadGameFromSlot("Default", 0)))
+    // {
+    //     //if new highscore save
+    //     if (Tank->GetHighScore() > PreviousGameInstance->Highscore)
+    //     {
+    //         FAsyncSaveGameToSlotDelegate SavedDelegate;
+    //         //save the game instance
+    //         UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, "Default", 0, SavedDelegate);
+    //         //UGameplayStatics::SaveGameToSlot(SaveGameInstance, "Default", 0);
+    //     }
+    // }
 }
 
 
